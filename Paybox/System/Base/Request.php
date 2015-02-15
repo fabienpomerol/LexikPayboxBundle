@@ -138,15 +138,20 @@ class Request extends Paybox
      *
      * @return string
      */
-    public function getUrl($env = 'dev')
+    public function getUrl($env = 'dev', $type = 'desktop')
     {
         $server = $this->getServer($env);
+        $cgiPath = $server['system_path'];
+
+        if ($type == 'mobile') {
+            $cgiPath = $server['mobile_path'];
+        }
 
         return sprintf(
             '%s://%s%s',
             $server['protocol'],
             $server['host'],
-            $server['system_path']
+            $cgiPath
         );
     }
 }
